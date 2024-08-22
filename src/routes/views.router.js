@@ -21,7 +21,14 @@ router.get("/profile", (req,res)=>{
     res.render("profile", {first_name, last_name, email,age})
 })
 
+router.get("/api/sessions/restore",(req,res)=>{
+    res.render("restore")
+})
 
+router.get("/failregister", async(req,res)=>{
+    console.log("registro fallido")
+    res.send({error:"failed"})
+})
 
 
 

@@ -4,16 +4,14 @@ import path from "path"
 import Handlebars from "handlebars"
 import MongoStore from "connect-mongo"
 import { create } from "express-handlebars";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 import viewsRouter from "./routes/views.router.js"
 import sessionRouter from "./routes/session.router.js"
 import mongoose from "mongoose"
+import passport from "passport"
+import initializePassport from "./config/passport.config.js"
+import { __dirname } from "./utils.js"
 
-// Crear __dirname manualmente
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 
 const PORT = 8080
@@ -51,6 +49,10 @@ app.use(session({
     resave:false,
     saveUninitialized:false
 }))
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.use("/",sessionRouter)
